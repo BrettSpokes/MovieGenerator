@@ -35,6 +35,13 @@
                 <button id="randomButton" class="btn btn-primary">Get Random Movie</button>
             </div>
         </div>
+        <div class="row mb-3">
+            <div class="col">
+                <select id="movieDropdown" class="form-select">
+                    <option selected disabled>Select a Movie</option>
+                </select>
+            </div>
+        </div>
         <div class="row">
             <div class="col">
                 <h2 id="movieTitle"></h2>
@@ -86,6 +93,30 @@
                 dropdown.add(option);
             });
         }
+
+        // Function to display selected movie
+        function displaySelectedMovie() {
+            const selectedIndex = document.getElementById('movieDropdown').selectedIndex;
+            if (selectedIndex !== 0) {
+                const selectedMovie = movieObjectArray[selectedIndex - 1]; // Adjust index to account for placeholder option
+                document.getElementById('movieTitle').innerText = selectedMovie.title;
+                document.getElementById('movieReason').innerText = selectedMovie.reason;
+                const movieImage = document.getElementById('movieImage');
+                movieImage.src = selectedMovie.imgUrl;
+                movieImage.style.display = 'block'; // Set display property to block
+            } else {
+                hideMovieImage(); // If placeholder option is selected, hide the movie image
+            }
+        }
+
+        function hideMovieImage() {
+            const movieImage = document.getElementById('movieImage');
+            movieImage.style.display = 'none';
+        }
+
+        // Event listener for dropdown change
+        document.getElementById('movieDropdown').addEventListener('change', displaySelectedMovie);
+
 
         // Event listener for random button
         document.getElementById('randomButton').addEventListener('click', getRandomMovie);
